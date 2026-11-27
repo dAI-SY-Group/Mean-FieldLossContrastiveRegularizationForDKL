@@ -1,0 +1,111 @@
+seed_everything: 1234
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: 32-true
+  logger: null
+  callbacks: null
+  fast_dev_run: false
+  max_epochs: 200
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: null
+  log_every_n_steps: null
+  enable_checkpointing: null
+  enable_progress_bar: null
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: lightning_logs/aleatoric_cip_conflow/Cifar100/IPH/WRN_28_10/
+model:
+  model_name: WideResNet_28_10
+  model_args:
+    num_classes: 100
+    shortcut_with_bn: -1
+    track_running_stats: true
+    with_classifier: true
+    preact: true
+    bias: false
+    sp_norm_p:
+    - 0.0
+    - 0.0
+  gp_args:
+    alpha_eps: 0.001
+    kernel: scaled_l2_difference
+    diagonal_q_u_covar: false
+    learnable_kernel_variance: false
+    fixed_kernel_var: 0.02
+    extra_linear: 128
+    reg: 1.0e-05
+    debug_mode: true
+    whiten: false
+    loss_type: mfcce20
+    inducing_points_method: vectors
+    inducing_points_reg: 0.1
+    test_jitter: 1.0e-06
+    train_jitter: 1.0e-06
+    normalize_gp_features: true
+    scale_cce_logits: 1.0
+  head: mlp
+  head_dim: 128
+  optimizer: SGD
+  optimizer_args: 
+    lr: 0.1
+    momentum: 0.9
+    weight_decay: 5e-4
+    nesterov: true
+  scheduler_params:
+    steps_per_epoch: 372
+    decay_ratio: 0.2
+    decay_epochs:
+    - 60
+    - 120
+    - 160
+    warm_up_epochs: 2
+  loss_args:
+    name: CCE
+    label_smoothing: 0.0
+  train_through_gp: true
+  contrastive: false
+  contrastive_factor: 1.0
+  mc_prediction_steps: 256
+  pretrained_eval_mode: false
+  initialization_ips: forward_grid
+  load_weight_file: ''
+  mixup_cutmix_alphas:
+  - 0.0
+  - 0.0
+  float32_matmul_precision: ''
+  n_additional_inducing_points: 0
+  extra_samples: 0
+data:
+  batch_size: 128
+  num_workers_train: 4
+  num_workers_test: 4
+  normalize: true
+  transform: Base
+  insert_corrupted_data: true
+  test_batch_size: null
+  image_size: 32

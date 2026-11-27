@@ -1,0 +1,24 @@
+metadata_version: 1
+name: Mean-Field Loss and Contrastive Regularization for Scalable Deep Kernel Uncertainty
+description: 'Abstract of the paper this capsule is connected to: A critical problem
+  of modern deep learning remains representing model uncertainty. While black-box
+  Bayesian methods are costly, Bayesian head approaches are a cost-efficient and promising
+  alternative. Deep kernel learning, Gaussian processes with a neural network kernel,
+  have been one of the most promising methods in this family. However, log-likelihood
+  derived loss functions can produce pathological behavior. Motivated by this pathology,
+  we propose two deep kernel learning methods that leverage a new loss function for
+  classification and a contrastive regularization that help to transfer structure
+  from the input space into the features of the neural network. We show that the resulting
+  feature-space uncertainty estimates improve calibration robustness under common
+  corruptions and naturally occurring distribution shifts, as well as out-of-distribution
+  detection. While the degree of improvement varies across datasets and metrics, the
+  gains are consistent on the more complex image benchmarks, which extend the evaluation
+  beyond the common comparisons in deep kernel learning literature. In conclusion,
+  our methods offer a computationally practical single-model approach for applications
+  that require reliable calibration and uncertainty estimates, enabling a feature-space-based
+  uncertainty representation that improves robustness in deep learning prediction
+  models.'
+authors:
+- name: Matthias Schmal
+  affiliations:
+  - name: Technische Universität Ilmenau

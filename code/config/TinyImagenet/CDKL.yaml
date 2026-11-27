@@ -1,0 +1,109 @@
+seed_everything: 1234
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: 32-true
+  logger: null
+  callbacks: null
+  fast_dev_run: false
+  max_epochs: 250
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: null
+  log_every_n_steps: null
+  enable_checkpointing: null
+  enable_progress_bar: null
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: lightning_logs/aleatoric_cip_conflow/TinyImagenet/IPH_new/WRN28_10/
+model:
+  model_name: WideResNet_28_10
+  model_args:
+    num_classes: 200
+    shortcut_with_bn: -1
+    track_running_stats: true
+    preact: true
+    bias: false
+    sp_norm_p: [0.0, 0.0]
+    input_ds: tiny_imagenet
+    with_projection: true
+  gp_args:
+    alpha_eps: 0.001
+    kernel: scaled_l2_difference  # scaled_linear, scaled_quadratic, scaled_l1_difference, scaled_l2_difference
+    diagonal_q_u_covar: false
+    learnable_kernel_variance: false
+    fixed_kernel_var: 0.01
+    extra_linear: 0
+    reg: 1.0e-05
+    debug_mode: true
+    whiten: false
+    loss_type: mfcce5
+    inducing_points_method: vectors
+    inducing_points_reg: 1e-4
+    test_jitter: 1e-7
+    train_jitter: 1e-7
+    normalize_gp_features: true
+    # start_zero_q_u_mean: true
+    scale_cce_logits: 1.0
+    smoothing: 0.0
+  head: linear
+  head_dim: 128
+  # optimizer: AdamW
+  # optimizer_args:
+  #   lr: 0.0002
+  #   weight_decay: 0.03
+  optimizer: SGD
+  optimizer_args: 
+    lr: 0.0002
+    momentum: 0.9
+    weight_decay: 5.0e-4
+    nesterov: true
+  scheduler_params:
+    scheduler_type: cosine
+    initial_lr: 0.0002
+    scale_by_batch_size: 200.0
+    decay_epochs: 250
+    warm_up_epochs: 8
+  loss_args:
+    name: CCE
+    label_smoothing: 0.1
+  train_through_gp: true
+  contrastive: false
+  mc_prediction_steps: 256
+  pretrained_eval_mode: false
+  initialization_ips: random_gaussian
+  n_additional_inducing_points: 0
+  mixup_cutmix_alphas: [0.5, 1.0]
+  contrastive_linearizing_loss: 0.2
+data:
+  batch_size: 64
+  num_workers_train: 8
+  num_workers_test: 8
+  normalize: true
+  transform: Base
+  insert_corrupted_data: true
+  image_size: 64
+  test_batch_size: null
